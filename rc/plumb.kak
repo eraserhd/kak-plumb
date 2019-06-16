@@ -2,8 +2,12 @@
 # ‾‾‾‾‾
 
 define-command \
-    -docstring %{plumb-selection: send selected text to the plumber} \
-    plumb-selection %{
+    -override \
+    -docstring %{plumb-click: send selection or WORD to plumber
+
+If the selection length is 1, send the current WORD to the plumber along with
+click coordinates.  Otherwise, send the selection to the plumber.} \
+    plumb-click %{
     evaluate-commands -itersel -draft %{
         # Move forward if on a single whitespace
         try %{ execute-keys '<a-k>\A\s\z<ret>/[^\s]<ret>' }
@@ -29,4 +33,4 @@ define-command \
     }
 }
 
-map global user o ': plumb-selection<ret>'
+map global user o ': plumb-click<ret>' # Mnemonic: (O)pen
