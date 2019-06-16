@@ -2,8 +2,8 @@
 # ‾‾‾‾‾
 
 define-command \
-    -docstring %{plumb: send text to the plumber} \
-    plumb %{
+    -docstring %{plumb-selection: send selected text to the plumber} \
+    plumb-selection %{
     evaluate-commands -itersel -draft %{
         # Move forward if on a single whitespace
         try %{ execute-keys '<a-k>\A\s\z<ret>/[^\s]<ret>' }
@@ -29,4 +29,4 @@ define-command \
     }
 }
 
-map global user o ': plumb<ret>'
+map global user o ': plumb-selection<ret>'
