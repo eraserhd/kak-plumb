@@ -1,0 +1,24 @@
+kak-plumb
+=========
+
+https://kakoune.org[Kakoune] integration with the
+https://9fans.github.io/plan9port/[plan9port]
+https://9fans.github.io/plan9port/man/man4/plumber.html[plumber].
+
+Plumbing Text and Clicking
+--------------------------
+
+User `o` is mapped to plumb the current selections.  Multiple selections are
+plumbed iteratively.
+
+If a selection is one character long, it is treated like a Plan 9 "click".
+The surrounding (or following) WORD is plumbed instead, and a "click"
+attribute is computed with the selection's offset.
+
+`kakoune` is sent as the source, and the current working directory is sent.
+Additionally, a `session` attribute is sent with the value of `%val{session}`.
+
+Contributing
+------------
+
+All new functionality must contain tests.  See `test/tests.bash` for details.
