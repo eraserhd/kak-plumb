@@ -3,12 +3,17 @@ source test/functions.bash
 
 h2 'selection length >1'
 t 'plumbs selected text' -in 'h%(ello) world' -keys ,o -plumbs ello
-#t 'sends session name'
+t 'sends session name' -flags '-s test-plumb' -in 'h%(ello) world' -keys ,o -attr session=test-plumb
 #t 'sends current working directory' (?? or file directory?)
 
 h2 'selection length =1'
-t 'plumbs click on WORD' -in 'h%(e)llo world' -keys ,o -plumbs hello -attr click=1
-t 'plumbs click on whitespace before WORD' -in '%( )   hello world' -keys ,o -plumbs hello -attr click=0
+h3 'in WORD'
+t 'plumbs WORD' -in 'h%(e)llo world' -keys ,o -plumbs hello -attr click=1
+t 'sends session name' -flags '-s test-plumb' -in 'h%(e)llo world' -keys ,o -attr session=test-plumb
+
+h3 'on whitespace before WORD'
+t 'plumbs following WORD' -in '%( )   hello world' -keys ,o -plumbs hello -attr click=0
+t 'sends session name' -flags '-s test-plumb' -in '%( )   hello world' -keys ,o -attr session=test-plumb
 
 h2 'in *grep* buffer'
 #t 'pressing enter plumbs match'

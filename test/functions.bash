@@ -30,7 +30,7 @@ t() {
     local description="$1"
     shift
 
-    local in='' keys=''
+    local in='' keys='' flags=''
     while true; do
         case "$1" in
             -in)
@@ -39,6 +39,10 @@ t() {
                 ;;
             -keys)
                 keys="$2"
+                shift 2
+                ;;
+            -flags)
+                flags="$2"
                 shift 2
                 ;;
             *)
@@ -51,7 +55,7 @@ t() {
     printf '' >test/9commands.txt
     printf '%s' "$in" >test/in.txt
 
-    PATH=./test:"$PATH" kak -n -ui json -e '
+    PATH=./test:"$PATH" kak -n $flags -ui json -e '
         source rc/plumb.kak
         try %{
             exec -save-regs / %{%s%\(\K[^)]+\)<ret>a<backspace><esc>i<backspace><backspace><c-u><esc><a-;>}

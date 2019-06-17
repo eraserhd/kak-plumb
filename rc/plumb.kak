@@ -9,7 +9,7 @@ Switches:
     -attr <name>=<value>   Add an attribute to the message (accumulative)} \
     plumb %{
     evaluate-commands %sh{
-        attrs=''
+        attrs="session=${kak_session}"
         while [ $# -ne 1 ]; do
             case "$1" in
                 -attr)
