@@ -27,7 +27,4 @@ h2 'in *make* buffer'
 #t 'make-next plumbs next error'
 #t 'make-previous plumbs previous error'
 
-h2 'edit-in-kakoune script'
-#t '...'
-
 summarize
