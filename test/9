@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+(
+    printf 'did_command'
+    for arg in "$@"; do
+        printf " '%s'" "${arg//"'"/"''"}"
+    done
+    printf '\n'
+) >>test/9commands.txt
