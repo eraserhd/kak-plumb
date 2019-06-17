@@ -22,7 +22,7 @@ Switches:
             esac
             shift
         done
-        err="$(9 plumb -s kakoune -a "${attrs}" "$@" 2>&1)"
+        err="$(9 plumb -s kakoune -w "$(pwd)" -a "${attrs}" "$@" 2>&1)"
         if [ -n "$err" ]; then
             printf 'fail "%s"\n' "$err"
         fi

@@ -119,6 +119,31 @@ t() {
                 fi
                 shift 2
                 ;;
+            -wdir)
+                WDIR_WANT="$2"
+                WDIR_FOUND=false
+                did_command() {
+                    if [[ $1 != plumb ]]; then
+                        return
+                    fi
+                    while (( $# > 0 )); do
+                        case "$1" in
+                            -w)
+                                shift
+                                if [[ $WDIR_WANT = $1 ]]; then
+                                    WDIR_FOUND=true
+                                fi
+                                ;;
+                        esac
+                        shift
+                    done
+                }
+                source test/9commands.txt
+                if ! $WDIR_FOUND; then
+                    fail "$@"
+                fi
+                shift 2
+                ;;
             *)
                 fail "$1"
                 break

@@ -4,7 +4,7 @@ source test/functions.bash
 h2 'selection length >1'
 t 'plumbs selected text' -in 'h%(ello) world' -keys ,o -plumbs ello
 t 'sends session name' -flags '-s test-plumb' -in 'h%(ello) world' -keys ,o -attr session=test-plumb
-#t 'sends current working directory' (?? or file directory?)
+t 'sends current working directory' -in 'h%(ello) world' -keys ,o -wdir $PWD
 
 h2 'selection length =1'
 h3 'in WORD'
