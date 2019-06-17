@@ -1,6 +1,9 @@
 TEST_COUNT=0
 TESTS_FAILED=0
 TEST_OK=true
+PLUMB_ATTRS=''
+PLUMB_WDIR=''
+PLUMB_DATA=''
 
 h2() {
     printf '\n \e[33;1m%s\e[0m\n' "$1"
@@ -24,6 +27,30 @@ fail() {
     printf "          Debug:\n"
     cat test/debug.txt
     printf '\n'
+}
+
+did_command() {
+    case "$1" in
+        plumb)
+            shift
+            while (( $# > 0 )); do
+                case "$1" in
+                    -a)
+                        PLUMB_ATTRS="$2"
+                        shift 2
+                        ;;
+                    -w)
+                        PLUMB_WDIR="$2"
+                        shift 2
+                        ;;
+                    *)
+                        PLUMB_TEXT="$1"
+                        shift
+                        ;;
+                esac
+            done
+            ;;
+    esac
 }
 
 t() {
@@ -70,76 +97,31 @@ t() {
         quit 0
     ' test/in.txt >/dev/null </dev/null
 
+    PLUMB_ATTRS=''
+    PLUMB_WDIR=''
+    PLUMB_DATA=''
+    source test/9commands.txt
+
     while (( $# > 0 )); do
         case "$1" in
             -attr)
-                ATTR_WANT="$2"
-                ATTR_FOUND=false
-                did_command() {
-                    if [[ $1 != plumb ]]; then
-                        return
-                    fi
-                    while (( $# > 0 )); do
-                        case "$1" in
-                            -a)
-                                shift
-                                case " $1 " in
-                                    *" $ATTR_WANT "*)
-                                        ATTR_FOUND=true
-                                        ;;
-                                esac
-                                ;;
-                        esac
-                        shift
-                    done
-                }
-                source test/9commands.txt
-                if ! $ATTR_FOUND; then
-                    fail "$@"
-                fi
+                case " $PLUMB_ATTRS " in
+                    *" $2 "*)
+                        ;;
+                    *)
+                        fail "$@"
+                        ;;
+                esac
                 shift 2
                 ;;
             -plumbs)
-                PLUMBS_WANT="$2"
-                PLUMBS_FOUND=false
-                did_command() {
-                    if [[ $1 != plumb ]]; then
-                        return
-                    fi
-                    while (( $# > 1 )); do
-                        shift
-                    done
-                    if [[ $1 = $PLUMBS_WANT ]]; then
-                        PLUMBS_FOUND=true
-                    fi
-                }
-                source test/9commands.txt
-                if ! $PLUMBS_FOUND; then
+                if [[ $PLUMB_TEXT != $2 ]]; then
                     fail "$@"
                 fi
                 shift 2
                 ;;
             -wdir)
-                WDIR_WANT="$2"
-                WDIR_FOUND=false
-                did_command() {
-                    if [[ $1 != plumb ]]; then
-                        return
-                    fi
-                    while (( $# > 0 )); do
-                        case "$1" in
-                            -w)
-                                shift
-                                if [[ $WDIR_WANT = $1 ]]; then
-                                    WDIR_FOUND=true
-                                fi
-                                ;;
-                        esac
-                        shift
-                    done
-                }
-                source test/9commands.txt
-                if ! $WDIR_FOUND; then
+                if [[ $PLUMB_WDIR != $2 ]]; then
                     fail "$@"
                 fi
                 shift 2
