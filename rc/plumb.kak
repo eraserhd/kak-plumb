@@ -2,11 +2,27 @@
 # ‾‾‾‾‾
 
 define-command \
+    -override \
     -params 1.. \
-    -docstring %{plumb <text>: send text to the plumber} \
+    -docstring %{plumb [<switches>] <text>: send text to the plumber
+Switches:
+    -attr <name>=<value>   Add an attribute to the message (accumulative)} \
     plumb %{
     evaluate-commands %sh{
-        err="$(9 plumb -s kakoune "$@" 2>&1)"
+        attrs=''
+        while [ $# -ne 1 ]; do
+            case "$1" in
+                -attr)
+                    attrs="${attrs} $2"
+                    shift
+                    ;;
+                *)
+                    printf 'fail "unknown switch %s"\n' "$1"
+                    exit 0
+            esac
+            shift
+        done
+        err="$(9 plumb -s kakoune -a "${attrs}" "$@" 2>&1)"
         if [ -n "$err" ]; then
             printf 'fail "%s"\n' "$err"
         fi
@@ -26,13 +42,10 @@ click coordinates.  Otherwise, send the selection to the plumber.} \
             # If we have a single-character selection, simulate clicking
             execute-keys '<a-k>\A[^\s]\z<ret>'
             execute-keys 'Z[<a-w>"lyz<a-i><a-w>'
-            evaluate-commands %sh{
+            plumb -attr %sh{
                 eval set -- "$kak_reg_l"
-                err="$(9 plumb -s kak -a click=$((${#1} - 1)) "$kak_selection" 2>&1)"
-                if [ -n "$err" ]; then
-                    printf 'fail "%s"\n' "$err"
-                fi
-            }
+                printf click=%d $((${#1} - 1))
+            } %val{selection}
         } catch %{
             plumb %val{selection}
         }
