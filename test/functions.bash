@@ -68,6 +68,33 @@ t() {
 
     while (( $# > 0 )); do
         case "$1" in
+            -attr)
+                ATTR_WANT="$2"
+                ATTR_FOUND=false
+                did_command() {
+                    if [[ $1 != plumb ]]; then
+                        return
+                    fi
+                    while (( $# > 0 )); do
+                        case "$1" in
+                            -a)
+                                shift
+                                case " $1 " in
+                                    *" $ATTR_WANT "*)
+                                        ATTR_FOUND=true
+                                        ;;
+                                esac
+                                ;;
+                        esac
+                        shift
+                    done
+                }
+                source test/9commands.txt
+                if ! $ATTR_FOUND; then
+                    fail "$@"
+                fi
+                shift 2
+                ;;
             -plumbs)
                 PLUMBS_WANT="$2"
                 PLUMBS_FOUND=false
