@@ -3,6 +3,8 @@ CHANGELOG
 
 == https://github.com/eraserhd/kak-plumb/compare/v0.1.0...HEAD[Unreleased]
 
+* Add UNLICENSE
+
 == v0.1.0
 
 * First release!
