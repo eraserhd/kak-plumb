@@ -1,4 +1,4 @@
-{ stdenv, ... }:
+{ stdenv, plan9port, ... }:
 
 stdenv.mkDerivation {
   pname = "kak-plumb";
@@ -7,7 +7,8 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/share/kak/autoload/plugins/
-    cp rc/plumb.kak $out/share/kak/autoload/plugins/
+    substitute rc/plumb.kak $out/share/kak/autoload/plugins/plumb.kak \
+      --replace '9 plumb' '${plan9port}/bin/9 plumb'
   '';
 
   meta = with stdenv.lib; {
