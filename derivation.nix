@@ -1,8 +1,9 @@
 { stdenv, plan9port, ... }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "kak-plumb";
   version = "0.1.0";
+
   src = ./.;
 
   installPhase = ''
@@ -14,7 +15,7 @@ stdenv.mkDerivation {
   meta = with stdenv.lib; {
     description = "Kakoune integration with the Plan 9 plumber";
     homepage = https://github.com/eraserhd/kak-plumb;
-    license = licenses.publicDomain;
+    license = licenses.unlicense;
     maintainers = with maintainers; [ eraserhd ];
     platforms = platforms.all;
   };
