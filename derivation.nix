@@ -12,7 +12,7 @@ stdenv.mkDerivation {
   '';
 
   meta = with stdenv.lib; {
-    description = "Kakoune integration with the Plan 9 plumber.";
+    description = "Kakoune integration with the Plan 9 plumber";
     homepage = https://github.com/eraserhd/kak-plumb;
     license = licenses.publicDomain;
     maintainers = with maintainers; [ eraserhd ];
