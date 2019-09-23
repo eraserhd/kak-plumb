@@ -1,4 +1,4 @@
-{ stdenv, plan9port, ... }:
+{ stdenv, fetchFromGitHub, plan9port, ... }:
 
 stdenv.mkDerivation rec {
   pname = "kak-plumb";
