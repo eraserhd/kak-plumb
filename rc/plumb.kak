@@ -1,6 +1,8 @@
 # Plumb
 # ‾‾‾‾‾
 
+declare-option -docstring 'a directory to send instead of $(pwd) for wdir' str plumb_wdir
+
 define-command \
     -override \
     -params 1.. \
@@ -22,7 +24,11 @@ Switches:
             esac
             shift
         done
-        err="$(9 plumb -s kakoune -w "$(pwd)" -a "${attrs}" "$@" 2>&1)"
+        wdir="$kak_opt_plumb_wdir"
+        if [ -z "$wdir" ]; then
+            wdir="$(pwd)"
+        fi
+        err="$(9 plumb -s kakoune -w "${wdir}" -a "${attrs}" "$@" 2>&1)"
         if [ -n "$err" ]; then
             printf 'fail "%s"\n' "$err"
         fi

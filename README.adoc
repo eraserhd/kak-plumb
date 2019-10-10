@@ -15,8 +15,9 @@ If a selection is one character long, it is treated like a Plan 9 "click".
 The surrounding (or following) WORD is plumbed instead, and a "click"
 attribute is computed with the selection's offset.
 
-`kakoune` is sent as the source, and the current working directory is sent.
-Additionally, a `session` attribute is sent with the value of `%val{session}`.
+`kakoune` is sent as the source. The current working directory is sent
+unless overridden by setting the `plumb_wdir` option.  Additionally, a
+`session` attribute is sent with the value of `%val{session}`.
 
 Contributing
 ------------

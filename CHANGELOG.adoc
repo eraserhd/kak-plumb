@@ -3,8 +3,9 @@ CHANGELOG
 
 == https://github.com/eraserhd/kak-plumb/compare/v0.1.0...HEAD[Unreleased]
 
-* Map normal mode `Enter` to plumb-click
 * Add UNLICENSE
+* Map normal mode `Enter` to plumb-click
+* Add `plumb_wdir` option
 
 == v0.1.0
 

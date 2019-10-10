@@ -4,7 +4,8 @@ source test/functions.bash
 h2 'selection length >1'
 t 'plumbs selected text' -in 'h%(ello) world' -keys '<ret>' -plumbs ello
 t 'sends session name' -flags '-s test-plumb' -in 'h%(ello) world' -keys '<ret>' -attr session=test-plumb
-t 'sends current working directory' -in 'h%(ello) world' -keys '<ret>' -wdir $PWD
+t 'sends current working directory when plumb_wdir is blank' -in 'h%(ello) world' -keys '<ret>' -wdir $PWD
+t 'sends plumb_wdir directory when not blank' -in 'h%(ello) world' -keys ':set-option buffer plumb_wdir /tmp/foo<ret><ret>' -wdir /tmp/foo
 
 h2 'selection length =1'
 h3 'in WORD'
