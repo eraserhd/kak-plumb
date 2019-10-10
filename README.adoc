@@ -8,7 +8,7 @@ https://9fans.github.io/plan9port/man/man4/plumber.html[plumber].
 Plumbing Text and Clicking
 --------------------------
 
-User `o` is mapped to plumb the current selections.  Multiple selections are
+`Enter` is mapped to plumb the current selections.  Multiple selections are
 plumbed iteratively.
 
 If a selection is one character long, it is treated like a Plan 9 "click".

@@ -52,4 +52,4 @@ click coordinates.  Otherwise, send the selection to the plumber.} \
     }
 }
 
-map global user o ': plumb-click<ret>' # Mnemonic: (O)pen
+map global normal <ret> ': plumb-click<ret>'
