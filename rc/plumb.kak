@@ -66,12 +66,16 @@ Address can be:
     <number>           a line number
     <number>:<number>  a line and column
     <number>.<number>  a line and column
-    /<regex>           first occurrence of <regex> in file} \
+    /<regex>           first occurrence of <regex> in file
+    $                  last line of file} \
     plumb-select %{
     evaluate-commands %sh{
         address="${1%:}"
         case "$address" in
             '')
+                ;;
+            '$')
+                printf %s\\n "execute-keys gj"
                 ;;
             /*)
                 regex="$(printf %s "${address#/}" |sed '
