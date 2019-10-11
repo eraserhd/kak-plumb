@@ -65,21 +65,22 @@ Address can be:
     <number>    a line number} \
     plumb-select %{
     evaluate-commands %sh{
-        case "$1" in
+        address="${1%:}"
+        case "$address" in
             '')
                 ;;
             *:*)
-                line="${1%:*}"
-                column="${1#*:}"
+                line="${address%:*}"
+                column="${address#*:}"
                 printf %s\\n "select ${line}.${column},${line}.${column}"
                 ;;
             *.*)
-                line="${1%.*}"
-                column="${1#*.}"
+                line="${addreses%.*}"
+                column="${address#*.}"
                 printf %s\\n "select ${line}.${column},${line}.${column}"
                 ;;
             *)
-                printf %s\\n "select $1.1,$1.1"
+                printf %s\\n "select ${address}.1,${address}.1"
                 ;;
         esac
     }
