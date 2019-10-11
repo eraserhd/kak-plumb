@@ -65,6 +65,9 @@ Address can be:
     <number>    a line number} \
     plumb-select %{
     evaluate-commands %sh{
+        if [ -z "$1" ]; then
+            exit
+        fi
         printf %s\\n "select $1.1,$1.1"
     }
 }
