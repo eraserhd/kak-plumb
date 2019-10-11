@@ -74,7 +74,11 @@ Address can be:
             '')
                 ;;
             /*)
-                regex="${address#/}"
+                regex="$(printf %s "${address#/}" |sed '
+                    s/</\a/g
+                    s/>/<gt>/g
+                    s/\a/<lt>/g
+                ')"
                 printf %s\\n "execute-keys gg/${regex}<ret>"
                 ;;
             *:*)
