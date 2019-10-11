@@ -73,6 +73,11 @@ Address can be:
                 column="${1#*:}"
                 printf %s\\n "select ${line}.${column},${line}.${column}"
                 ;;
+            *.*)
+                line="${1%.*}"
+                column="${1#*.}"
+                printf %s\\n "select ${line}.${column},${line}.${column}"
+                ;;
             *)
                 printf %s\\n "select $1.1,$1.1"
                 ;;
