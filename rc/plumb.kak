@@ -69,6 +69,9 @@ Address can be:
         case "$address" in
             '')
                 ;;
+            /*)
+                printf %s\\n "execute-keys gg${address}<ret>"
+                ;;
             *:*)
                 line="${address%:*}"
                 column="${address#*:}"

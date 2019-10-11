@@ -34,5 +34,6 @@ t '<number> selects a line' -in '%(1)x\n2y\n3z' -keys ':plumb-select 2<ret>' -se
 t '<number>:<number> selects line and column' -in '%(1)x\n2y\n3z' -keys ':plumb-select 3:2<ret>' -selects "'z'"
 t '<number>.<number> selects line and column' -in '%(1)x\n2y\n3z' -keys ':plumb-select 3.2<ret>' -selects "'z'"
 t 'trailing colons are ignored' -in '%(1)x\n2y\n3z' -keys ':plumb-select 3:<ret>' -selects "'3'"
+t '/<regex> finds an occurrence' -in '%(1)x\n2y\n3z' -keys ':plumb-select /2<ret>' -selects "'2'"
 
 summarize
