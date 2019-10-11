@@ -62,7 +62,11 @@ define-command \
     -docstring %{plumb-select <address>: select by Plan 9 address
 
 Address can be:
-    <number>    a line number} \
+    ''                 does nothing
+    <number>           a line number
+    <number>:<number>  a line and column
+    <number>.<number>  a line and column
+    /<regex>           first occurrence of <regex> in file} \
     plumb-select %{
     evaluate-commands %sh{
         address="${1%:}"
@@ -70,7 +74,8 @@ Address can be:
             '')
                 ;;
             /*)
-                printf %s\\n "execute-keys gg${address}<ret>"
+                regex="${address#/}"
+                printf %s\\n "execute-keys gg/${regex}<ret>"
                 ;;
             *:*)
                 line="${address%:*}"
