@@ -4,7 +4,6 @@
 declare-option -docstring 'a directory to send instead of $(pwd) for wdir' str plumb_wdir
 
 define-command \
-    -override \
     -params 1.. \
     -docstring %{plumb [<switches>] <text>: send text to the plumber
 Switches:
@@ -55,6 +54,18 @@ click coordinates.  Otherwise, send the selection to the plumber.} \
         } catch %{
             plumb %val{selection}
         }
+    }
+}
+
+define-command \
+    -params 1 \
+    -docstring %{plumb-select <address>: select by Plan 9 address
+
+Address can be:
+    <number>    a line number} \
+    plumb-select %{
+    evaluate-commands %sh{
+        printf %s\\n "select $1.1,$1.1"
     }
 }
 

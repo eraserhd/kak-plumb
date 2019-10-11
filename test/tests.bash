@@ -28,4 +28,7 @@ h2 'in *make* buffer'
 #t 'make-next plumbs next error'
 #t 'make-previous plumbs previous error'
 
+h2 'plumb-select'
+t '<number> selects a line' -in '%(1)-\n2-\n3-' -keys ':plumb-select 2<ret>' -selects "'2'"
+
 summarize

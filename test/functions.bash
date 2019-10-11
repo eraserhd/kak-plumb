@@ -22,6 +22,7 @@ fail() {
     escaped_out="${escaped_out///\\x0E}"
     escaped_out="${escaped_out///\\x0F}"
     printf '      Assertion: \e[31m%s\e[0m\n' "$*"
+    printf '     Selections: %s\n' "$(cat test/selections.txt 2>/dev/null)"
     printf "       Commands:\n"
     cat test/9commands.txt
     printf "          Debug:\n"
@@ -80,7 +81,7 @@ t() {
 
     printf '     %s ... ' "$description"
     printf '' >test/9commands.txt
-    printf '%s' "$in" >test/in.txt
+    printf '%s' "$in" |sed -e 's/\\n/\n/g' >test/in.txt
 
     PATH=./test:"$PATH" kak -n $flags -ui json -e '
         source rc/plumb.kak
@@ -94,6 +95,9 @@ t() {
         }
         execute-keys -with-hooks -with-maps %{'"$keys"'}
         eval -buffer *debug* write test/debug.txt
+        nop %sh{
+            printf %s\\n "$kak_quoted_selections" >test/selections.txt
+        }
         quit 0
     ' test/in.txt >/dev/null </dev/null
 
@@ -116,6 +120,12 @@ t() {
                 ;;
             -plumbs)
                 if [[ $PLUMB_TEXT != $2 ]]; then
+                    fail "$@"
+                fi
+                shift 2
+                ;;
+            -selects)
+                if [[ $(cat test/selections.txt) != $2 ]]; then
                     fail "$@"
                 fi
                 shift 2
