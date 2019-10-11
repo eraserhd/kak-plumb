@@ -30,6 +30,7 @@ h2 'in *make* buffer'
 
 h2 'plumb-select'
 t 'empty string changes nothing' -in '  %(h)ello' -keys ':plumb-select ""<ret>' -selects "'h'"
-t '<number> selects a line' -in '%(1)-\n2-\n3-' -keys ':plumb-select 2<ret>' -selects "'2'"
+t '<number> selects a line' -in '%(1)x\n2y\n3z' -keys ':plumb-select 2<ret>' -selects "'2'"
+t '<number>:<number> select column' -in '%(1)x\n2y\n3z' -keys ':plumb-select 3:2<ret>' -selects "'z'"
 
 summarize
