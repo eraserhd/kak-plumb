@@ -57,49 +57,4 @@ click coordinates.  Otherwise, send the selection to the plumber.} \
     }
 }
 
-define-command \
-    -params 1 \
-    -docstring %{plumb-select <address>: select by Plan 9 address
-
-Address can be:
-    ''                 does nothing
-    <number>           a line number
-    <number>:<number>  a line and column
-    <number>.<number>  a line and column
-    /<regex>           first occurrence of <regex> in file
-    $                  last line of file} \
-    plumb-select %{
-    evaluate-commands %sh{
-        address="${1%:}"
-        case "$address" in
-            '')
-                ;;
-            '$')
-                printf %s\\n "execute-keys gj"
-                ;;
-            /*)
-                regex="$(printf %s "${address#/}" |sed '
-                    s/</\a/g
-                    s/>/<gt>/g
-                    s/\a/<lt>/g
-                ')"
-                printf %s\\n "execute-keys gg/${regex}<ret>"
-                ;;
-            *:*)
-                line="${address%:*}"
-                column="${address#*:}"
-                printf %s\\n "select ${line}.${column},${line}.${column}"
-                ;;
-            *.*)
-                line="${addreses%.*}"
-                column="${address#*.}"
-                printf %s\\n "select ${line}.${column},${line}.${column}"
-                ;;
-            *)
-                printf %s\\n "select ${address}.1,${address}.1"
-                ;;
-        esac
-    }
-}
-
 map global normal <ret> ': plumb-click<ret>'

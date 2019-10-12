@@ -28,14 +28,4 @@ h2 'in *make* buffer'
 #t 'make-next plumbs next error'
 #t 'make-previous plumbs previous error'
 
-h2 'plumb-select'
-t 'empty string changes nothing' -in '  %(h)ello' -keys ':plumb-select ""<ret>' -selects "'h'"
-t '<number> selects a line' -in '%(1)x\n2y\n3z' -keys ':plumb-select 2<ret>' -selects "'2'"
-t '<number>:<number> selects line and column' -in '%(1)x\n2y\n3z' -keys ':plumb-select 3:2<ret>' -selects "'z'"
-t '<number>.<number> selects line and column' -in '%(1)x\n2y\n3z' -keys ':plumb-select 3.2<ret>' -selects "'z'"
-t 'trailing colons are ignored' -in '%(1)x\n2y\n3z' -keys ':plumb-select 3:<ret>' -selects "'3'"
-t '/<regex> finds an occurrence' -in '%(1)x\n2y\n3z' -keys ':plumb-select /2<ret>' -selects "'2'"
-t '/<regex> handles <> correctly' -in '%(1)x\nx<>\n3z' -keys ':plumb-select /<lt><gt><ret>' -selects "'<>'"
-t '$ moves to end-of-file' -in '%(1)x\n2y\n3z' -keys ':plumb-select $<ret>' -selects "'3'"
-
 summarize
