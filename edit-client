@@ -30,8 +30,8 @@ set -e
         %s
         try focus
       } catch %%{
-        echo -markup "{Error}%val{error}"
-        echo -debug "%val{error}"
+        echo -markup "{Error}%%val{error}"
+        echo -debug "%%val{error}"
       }
     }
   ' "$client" "$evaluate" |kak -p "$session"
