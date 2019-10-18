@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, plan9port, ... }:
+{ stdenv, fetchFromGitHub, kakoune-unwrapped, plan9port, ... }:
 
 stdenv.mkDerivation rec {
   pname = "kak-plumb";
@@ -7,9 +7,13 @@ stdenv.mkDerivation rec {
   src = ./.;
 
   installPhase = ''
-    mkdir -p $out/share/kak/autoload/plugins/
+    mkdir -p $out/bin $out/share/kak/autoload/plugins/
     substitute rc/plumb.kak $out/share/kak/autoload/plugins/plumb.kak \
       --replace '9 plumb' '${plan9port}/bin/9 plumb'
+    substitute edit-client $out/bin/edit-client \
+      --replace '9 9p' '${plan9port}/bin/9 9p' \
+      --replace 'kak -p' '${kakoune-unwrapped}/bin/kak -p'
+    chmod +x $out/bin/edit-client
   '';
 
   meta = with stdenv.lib; {
