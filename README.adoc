@@ -19,6 +19,16 @@ attribute is computed with the selection's offset.
 unless overridden by setting the `plumb_wdir` option.  Additionally, a
 `session` attribute is sent with the value of `%val{session}`.
 
+Opening Plumbs in Kakoune
+-------------------------
+
+`edit-client` is a script which will listen to the plumber's `edit` port and
+send Kakoune sessions commands it receives.  It can be used to open files in
+Kakoune when plumbed.
+
+It should be wrapped with systemd or launchd.  Make sure that `kak` and `9`
+are in the path and `$NAMESPACE` is set properly.
+
 Contributing
 ------------
 
