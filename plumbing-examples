@@ -1,0 +1,61 @@
+
+# This was taken from the default rules
+addrelem='((#?[0-9]+)|(/[A-Za-z0-9_\^]+/?)|[.$])'
+addr=:($addrelem([,;+\-]$addrelem)*)
+twocolonaddr = ([0-9]+)[:.]([0-9]+)
+
+# The rules below don't have `isfile` in them because my system that runs
+# the plumber doesn't have my dev box's files mounted.  You should be able
+# to replace the first `data set $1` line in each rule with `arg isfile $1`.
+
+# ---------------------------------------------------------------------------
+
+# Open paths named `/tmp/buffer-*.??????` as fifos in Kakoune.
+# Sets plumb_wdir on the buffer so that plumb clicks work.
+# FIXME: Should we be trying to use `action=showdata` instead??
+type is text
+data matches '/tmp/buffer-([.a-zA-Z¡-￿0-9_\-@]*[a-zA-Z¡-￿0-9_\-])\.......'
+data set     $0
+data set     $file
+attr add     session=kakoune
+attr add     'evaluate=''edit -fifo %§'$file'§ %§'$1'§ ; try %{set-option buffer plumb_wdir %§'$wdir'§}'''
+plumb to edit
+
+# ---------------------------------------------------------------------------
+
+# Files tagged by line number:columnumber or linenumber.columnumber, twice
+type is text
+data matches '([.a-zA-Z¡-￿0-9_/\-@]*[a-zA-Z¡-￿0-9_/\-])':$twocolonaddr,$twocolonaddr
+data set     $1
+data set     $file
+attr add     session=kakoune
+attr add     'evaluate=''edit -existing %§'$data'§ ; select '$2'.'$3','$4'.'$5''''
+plumb to edit
+
+# Files tagged by line number:columnumber or linenumber.columnumber
+type is text
+data matches '([.a-zA-Z¡-￿0-9_/\-@]*[a-zA-Z¡-￿0-9_/\-])':$twocolonaddr
+data set     $1
+data set     $file
+attr add     session=kakoune
+attr add     'evaluate=''edit -existing %§'$data'§ '$2' '$3''''
+plumb to edit
+
+# Files tagged by line number.
+type is text
+data matches '([.a-zA-Z¡-￿0-9_/\-@]*[a-zA-Z¡-￿0-9_/\-])'$addr
+data set     $1
+data set     $file
+attr add     session=kakoune
+attr add     'evaluate=''edit -existing %§'$data'§ '$2' ; execute-keys gi'''
+plumb to edit
+
+# Untagged paths are just opened.
+type is text
+data matches '([.a-zA-Z¡-￿0-9_/\-@]*[a-zA-Z¡-￿0-9_/\-])'
+data set     $1
+data set     $file
+attr add     session=kakoune
+attr add     'evaluate=''edit -existing %§'$data'§'''
+plumb to edit
+

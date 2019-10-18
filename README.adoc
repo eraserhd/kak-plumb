@@ -29,6 +29,8 @@ Kakoune when plumbed.
 It should be wrapped with systemd or launchd.  Make sure that `kak` and `9`
 are in the path and `$NAMESPACE` is set properly.
 
+See the `plumbing-examples` file for examples of usage.
+
 Contributing
 ------------
 

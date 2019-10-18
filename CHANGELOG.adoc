@@ -11,6 +11,7 @@ CHANGELOG
 
 * Add `edit-client` script. It listens on the plumber's `edit` port and can open
   files or run commands based on the attributes the plumber sends it.
+* Add `plumbing-examples`
 
 == v0.1.0
 
