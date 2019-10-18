@@ -17,9 +17,9 @@ set -e
   eval set -- "$attrs"
   while [[ $# -ne 0 ]]; do
     case "$1" in
-      client=*)   client="''${1#client=}";;
-      evaluate=*) evaluate="''${1#evaluate=}";;
-      session=*)  session="''${1#session=}";;
+      client=*)   client="${1#client=}";;
+      evaluate=*) evaluate="${1#evaluate=}";;
+      session=*)  session="${1#session=}";;
     esac
     shift
   done
