@@ -1,9 +1,11 @@
 CHANGELOG
 =========
 
-== https://github.com/eraserhd/kak-plumb/compare/v0.1.0...HEAD[Unreleased]
+== https://github.com/eraserhd/kak-plumb/compare/v0.1.1...HEAD[Unreleased]
 
-* Add UNLICENSE
+== https://github.com/eraserhd/kak-plumb/compare/v0.1.0...v0.1.1[v0.1.1]
+
+* Add UNLICENSE, `plumbing-examples`, and `edit-client` scripts
 * Map normal mode `Enter` to plumb-click
 * Add `plumb_wdir` option
 
