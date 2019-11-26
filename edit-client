@@ -9,7 +9,7 @@ set -e
   read -r type
   read -r attrs
   read -r ndata
-  read -N $ndata data
+  LC_ALL=C read -rN $ndata data
 
   client='%opt{jumpclient}'
   evaluate=""
@@ -24,9 +24,13 @@ set -e
     shift
   done
 
+  dataFile=$(mktemp)
+  printf %s "$data" >"$dataFile"
+
   printf '
     evaluate-commands -try-client %s %%{
       try %%{
+        set-option window plumb_data %%file{%s}
         %s
         try focus
       } catch %%{
@@ -34,5 +38,7 @@ set -e
         echo -debug "%%val{error}"
       }
     }
-  ' "$client" "$evaluate" |kak -p "$session"
+  ' "$client" "$dataFile" "$evaluate" |kak -p "$session"
+
+  rm -f "$dataFile"
 done

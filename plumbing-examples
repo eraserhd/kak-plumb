@@ -18,7 +18,7 @@ data matches '/tmp/buffer-([.a-zA-Z¡-￿0-9_\-@]*[a-zA-Z¡-￿0-9_\-])\.......'
 data set     $0
 data set     $file
 attr add     session=kakoune
-attr add     'evaluate=''edit -fifo %§'$file'§ %§'$1'§ ; try %{set-option buffer plumb_wdir %§'$wdir'§}'''
+attr add     'evaluate=''edit -fifo %§'$file'§ %§'$1'§ ; try %{set-option window plumb_wdir %§'$wdir'§}'''
 plumb to edit
 
 # ---------------------------------------------------------------------------
@@ -57,5 +57,18 @@ data set     $1
 data set     $file
 attr add     session=kakoune
 attr add     'evaluate=''edit -existing %§'$data'§'''
+plumb to edit
+
+# When action=showdata and we haven't matched anything above, display the data
+# in a scratch buffer.  This allows you to do things like:
+#
+#   git show |9 plumb -i
+#
+type is      text
+type set     $attr
+type matches '.*action=showdata.*'
+type set     text
+attr add     session=kakoune
+attr add     'evaluate=''plumb-showdata ; try %{set-option window plumb_wdir %§'$wdir'§}'''
 plumb to edit
 

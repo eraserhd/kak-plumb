@@ -2,6 +2,7 @@
 # ‾‾‾‾‾
 
 declare-option -docstring 'a directory to send instead of $(pwd) for wdir' str plumb_wdir
+declare-option -docstring 'data sent during the last plumb' str plumb_data
 
 define-command \
     -params 1.. \
@@ -31,6 +32,17 @@ Switches:
         if [ -n "$err" ]; then
             printf 'fail "%s"\n' "$err"
         fi
+    }
+}
+
+define-command \
+    -params 0 \
+    -docstring %{plumb-showdata: display contents of plumb_data option} \
+    plumb-showdata %{
+    edit -scratch *showdata*
+    evaluate-commands -save-regs d -draft %{
+        set-register d "%opt{plumb_data}"
+        execute-keys '%"dR'
     }
 }
 
