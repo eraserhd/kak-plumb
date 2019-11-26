@@ -31,6 +31,7 @@ set -e
     evaluate-commands -try-client %s %%{
       try %%{
         set-option window plumb_data %%file{%s}
+        nop %%sh{rm -f "%s"}
         %s
         try focus
       } catch %%{
@@ -38,7 +39,5 @@ set -e
         echo -debug "%%val{error}"
       }
     }
-  ' "$client" "$dataFile" "$evaluate" |kak -p "$session"
-
-  rm -f "$dataFile"
+  ' "$client" "$dataFile" "$dataFile" "$evaluate" |kak -p "$session"
 done
