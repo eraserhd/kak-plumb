@@ -36,7 +36,6 @@ Switches:
 }
 
 define-command \
-    -override \
     -params 0 \
     -docstring %{plumb-showdata: display contents of plumb_data option} \
     plumb-showdata %{
