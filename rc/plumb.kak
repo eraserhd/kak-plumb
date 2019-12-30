@@ -35,21 +35,17 @@ Switches:
     }
 }
 
+declare-option -hidden str-list plumb_saved_d
+
 define-command \
     -params 0 \
     -docstring %{plumb-showdata: display contents of plumb_data option} \
     plumb-showdata %{
-    evaluate-commands %sh{
-        printf "
-            edit -scratch *showdata*
-            evaluate-commands -save-regs d -draft %%{
-                set-register d '"
-        printf %s "$kak_opt_plumb_data" |sed -e "s/'/''/g"
-        printf "'
-                execute-keys '%%\"dR'
-            }
-            "
-    }
+    set-option global plumb_saved_d %reg{d}
+    set-register d %opt{plumb_data}
+    edit -scratch *showdata*
+    execute-keys '%"dRgg'
+    set-register d %opt{plumb_saved_d}
 }
 
 define-command -hidden plumb-click-WORD %{
