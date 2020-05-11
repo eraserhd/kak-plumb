@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
     mkdir -p $out/bin $out/share/kak/autoload/plugins/
     substitute rc/plumb.kak $out/share/kak/autoload/plugins/plumb.kak \
       --replace '9 plumb' '${plan9port}/bin/9 plumb'
+    cp rc/plumbing.kak $out/share/kak/autoload/plugins/plumbing.kak
     substitute edit-client $out/bin/edit-client \
       --replace '9 9p' '${plan9port}/bin/9 9p' \
       --replace 'kak -p' '${kakoune-unwrapped}/bin/kak -p'
