@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, kakoune-unwrapped, plan9port, ... }:
+{ stdenv, fetchFromGitHub, kakoune, plan9port, ... }:
 
 stdenv.mkDerivation rec {
   pname = "kak-plumb";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
     cp rc/plumbing.kak $out/share/kak/autoload/plugins/plumbing.kak
     substitute edit-client $out/bin/edit-client \
       --replace '9 9p' '${plan9port}/bin/9 9p' \
-      --replace 'kak -p' '${kakoune-unwrapped}/bin/kak -p'
+      --replace 'kak -p' '${kakoune}/bin/kak -p'
     chmod +x $out/bin/edit-client
   '';
 
