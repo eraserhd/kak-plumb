@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, kakoune-unwrapped, plan9port, ... }:
+{ stdenv, lib, fetchFromGitHub, kakoune-unwrapped, plan9port, ... }:
 
 stdenv.mkDerivation rec {
   pname = "kak-plumb";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     chmod +x $out/bin/edit-client
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Kakoune integration with the Plan 9 plumber";
     homepage = https://github.com/eraserhd/kak-plumb;
     license = licenses.unlicense;
